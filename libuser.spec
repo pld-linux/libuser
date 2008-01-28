@@ -9,10 +9,11 @@ Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	74bd4ad52d81ccf67a8f6cd110add809
 Patch0:		%{name}-selinux.patch
 BuildRequires:	cyrus-sasl-devel
-BuildRequires:	glib2-devel
+BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libselinux-devel
 BuildRequires:	openldap-devel
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	python-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -98,23 +99,47 @@ rm -fr $RPM_BUILD_ROOT
 %doc AUTHORS COPYING NEWS README TODO docs/*.txt
 %config(noreplace) %{_sysconfdir}/libuser.conf
 
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*
+%attr(755,root,root) %{_bindir}/lchfn
+%attr(755,root,root) %{_bindir}/lchsh
+%attr(755,root,root) %{_libdir}/libuser.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libuser.so.1
 %dir %{_libdir}/%{name}
-%{_libdir}/%{name}/*.so
-%attr(755,root,root) %{_sbindir}/*
-%{_mandir}/man1/*
-%{_mandir}/man5/*
+%{_libdir}/%{name}/libuser_files.so
+%{_libdir}/%{name}/libuser_ldap.so
+%{_libdir}/%{name}/libuser_shadow.so
+%attr(755,root,root) %{_sbindir}/lchage
+%attr(755,root,root) %{_sbindir}/lgroupadd
+%attr(755,root,root) %{_sbindir}/lgroupdel
+%attr(755,root,root) %{_sbindir}/lgroupmod
+%attr(755,root,root) %{_sbindir}/lid
+%attr(755,root,root) %{_sbindir}/lnewusers
+%attr(755,root,root) %{_sbindir}/lpasswd
+%attr(755,root,root) %{_sbindir}/luseradd
+%attr(755,root,root) %{_sbindir}/luserdel
+%attr(755,root,root) %{_sbindir}/lusermod
+%{_mandir}/man1/lchage.1*
+%{_mandir}/man1/lchfn.1*
+%{_mandir}/man1/lchsh.1*
+%{_mandir}/man1/lgroupadd.1*
+%{_mandir}/man1/lgroupdel.1*
+%{_mandir}/man1/lgroupmod.1*
+%{_mandir}/man1/lid.1*
+%{_mandir}/man1/lnewusers.1*
+%{_mandir}/man1/lpasswd.1*
+%{_mandir}/man1/luseradd.1*
+%{_mandir}/man1/luserdel.1*
+%{_mandir}/man1/lusermod.1*
+%{_mandir}/man5/libuser.conf.5*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so
-%{_libdir}/*.la
+%attr(755,root,root) %{_libdir}/libuser.so
+%{_libdir}/libuser.la
 %{_includedir}/libuser
-%{_pkgconfigdir}/*
-%{_gtkdocdir}/*
+%{_pkgconfigdir}/libuser.pc
+%{_gtkdocdir}/libuser
 
 %files -n python-libuser
 %defattr(644,root,root,755)
 %doc python/modules.txt
-%{py_sitedir}/*.so
+%attr(755,root,root) %{py_sitedir}/libusermodule.so
