@@ -53,7 +53,7 @@ aplikacji wykorzystujących bibliotekę libuser.
 Summary:	Python bindings for the libuser library
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libuser
 Group:		Libraries/Python
-Requires:	libuser = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n python-libuser
 This package contains the Python bindings for the libuser library,
