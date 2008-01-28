@@ -96,9 +96,8 @@ rm -fr $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING NEWS README TODO docs/*.txt
-%config(noreplace) %{_sysconfdir}/libuser.conf
-
+%doc AUTHORS ChangeLog NEWS README TODO docs/*.txt
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/libuser.conf
 %attr(755,root,root) %{_bindir}/lchfn
 %attr(755,root,root) %{_bindir}/lchsh
 %attr(755,root,root) %{_libdir}/libuser.so.*.*.*
