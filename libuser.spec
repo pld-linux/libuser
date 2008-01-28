@@ -7,7 +7,7 @@ License:	LGPL v2+
 Group:		Applications/System
 Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	74bd4ad52d81ccf67a8f6cd110add809
-Patch0:		%{name}-0.56.6-selinux.patch
+Patch0:		%{name}-selinux.patch
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	glib2-devel
 BuildRequires:	libselinux-devel
