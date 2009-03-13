@@ -2,7 +2,7 @@ Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
 Version:	0.56.6
-Release:	2
+Release:	3
 License:	LGPL v2+
 Group:		Applications/System
 Source0:	%{name}-%{version}.tar.bz2
