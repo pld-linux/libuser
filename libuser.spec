@@ -1,13 +1,19 @@
+# TODO
+# - tests need local ldap running (should start own copy of daemon instead)
+#
+# Conditional build:
+%bcond_with	tests	# do not perform "make test"
+
 Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
-Version:	0.56.6
-Release:	5
+Version:	0.57.1
+Release:	1
 License:	LGPL v2+
-Group:		Applications/System
-Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	74bd4ad52d81ccf67a8f6cd110add809
-Patch0:		%{name}-selinux.patch
+Group:		Base
+Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
+# Source0-md5:	be82c6941264d0b4bd04f95fb342ec7d
+URL:		https://fedorahosted.org/libuser/
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libselinux-devel
@@ -17,6 +23,12 @@ BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	python-devel
 BuildRequires:	sgml-tools
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+%if %{with tests}
+BuildRequires:	openldap
+BuildRequires:	openldap-servers
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -69,7 +81,6 @@ i grup.
 
 %prep
 %setup -q
-%patch0 -p0
 
 %build
 %configure \
@@ -78,14 +89,15 @@ i grup.
 	--with-html-dir=%{_gtkdocdir}
 %{__make}
 
+%{?with_tests:%{__make} check}
+
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
-rm $RPM_BUILD_ROOT%{py_sitedir}/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.la
 
 %find_lang %{name}
 
