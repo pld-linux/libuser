@@ -16,6 +16,7 @@ Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
 Patch0:		format-security.patch
 URL:		https://fedorahosted.org/libuser/
 BuildRequires:	cyrus-sasl-devel
+BuildRequires:	gettext-devel >= 0.17
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libselinux-devel
 BuildRequires:	openldap-devel
@@ -86,6 +87,7 @@ i grup.
 
 %build
 %configure \
+	NSCD=/usr/sbin/nscd \
 	--with-selinux \
 	--with-ldap \
 	--with-html-dir=%{_gtkdocdir}
@@ -118,9 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libuser.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libuser.so.1
 %dir %{_libdir}/%{name}
-%{_libdir}/%{name}/libuser_files.so
-%{_libdir}/%{name}/libuser_ldap.so
-%{_libdir}/%{name}/libuser_shadow.so
+%attr(755,root,root) %{_libdir}/%{name}/libuser_files.so
+%attr(755,root,root) %{_libdir}/%{name}/libuser_ldap.so
+%attr(755,root,root) %{_libdir}/%{name}/libuser_shadow.so
 %attr(755,root,root) %{_sbindir}/lchage
 %attr(755,root,root) %{_sbindir}/lgroupadd
 %attr(755,root,root) %{_sbindir}/lgroupdel
