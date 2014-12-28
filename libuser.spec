@@ -16,7 +16,7 @@ Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
 Patch0:		format-security.patch
 URL:		https://fedorahosted.org/libuser/
 BuildRequires:	cyrus-sasl-devel
-BuildRequires:	gettext-devel >= 0.17
+BuildRequires:	gettext-tools >= 0.17
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libselinux-devel
 BuildRequires:	openldap-devel
