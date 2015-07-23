@@ -7,12 +7,12 @@
 Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
-Version:	0.60
-Release:	3
+Version:	0.61
+Release:	1
 License:	LGPL v2+
 Group:		Base
 Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
-# Source0-md5:	5c549724999ccca65ceaaecc4eb8cb98
+# Source0-md5:	d977dc59161272c1491edd9ca7ba22f2
 Patch0:		format-security.patch
 URL:		https://fedorahosted.org/libuser/
 BuildRequires:	cyrus-sasl-devel
@@ -158,4 +158,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python-libuser
 %defattr(644,root,root,755)
 %doc python/modules.txt
-%attr(755,root,root) %{py_sitedir}/libusermodule.so
+%attr(755,root,root) %{py_sitedir}/libuser.so
