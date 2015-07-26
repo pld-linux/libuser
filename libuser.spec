@@ -7,12 +7,12 @@
 Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
-Version:	0.61
+Version:	0.62
 Release:	1
 License:	LGPL v2+
 Group:		Base
 Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
-# Source0-md5:	d977dc59161272c1491edd9ca7ba22f2
+# Source0-md5:	63e5e5c551e99dc5302b40b80bd6d4f2
 Patch0:		format-security.patch
 URL:		https://fedorahosted.org/libuser/
 BuildRequires:	cyrus-sasl-devel
