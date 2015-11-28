@@ -8,7 +8,7 @@ Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
 Version:	0.62
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		Base
 Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
