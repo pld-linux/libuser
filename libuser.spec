@@ -8,13 +8,15 @@ Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
 Version:	0.62
-Release:	4
+Release:	5
 License:	LGPL v2+
 Group:		Base
-Source0:	https://fedorahosted.org/releases/l/i/libuser/%{name}-%{version}.tar.xz
+#Source0Download: https://pagure.io/libuser/releases
+#Source0:	https://pagure.io/libuser/archive/libuser-%{version}/libuser-%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar.xz
 # Source0-md5:	63e5e5c551e99dc5302b40b80bd6d4f2
 Patch0:		format-security.patch
-URL:		https://fedorahosted.org/libuser/
+URL:		https://pagure.io/libuser
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	gettext-tools >= 0.17
 BuildRequires:	glib2-devel >= 2.0
@@ -65,6 +67,20 @@ developing applications with libuser.
 Ten pakiet zawiera pliki nagłówkowe i inne przydatne do tworzenia
 aplikacji wykorzystujących bibliotekę libuser.
 
+%package apidocs
+Summary:	API documentation for libuser library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki libuser
+Group:		Documentation
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
+
+%description apidocs
+API documentation for libuser library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki libuser.
+
 %package -n python-libuser
 Summary:	Python bindings for the libuser library
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libuser
@@ -88,20 +104,24 @@ i grup.
 %build
 %configure \
 	NSCD=/usr/sbin/nscd \
-	--with-selinux \
+	--with-html-dir=%{_gtkdocdir} \
 	--with-ldap \
-	--with-html-dir=%{_gtkdocdir}
+	--with-selinux
 %{__make}
 
 %{?with_tests:%{__make} check}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# loadable modules
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.la
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libuser.la
 
 %find_lang %{name}
 
@@ -150,9 +170,11 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libuser.so
-%{_libdir}/libuser.la
 %{_includedir}/libuser
 %{_pkgconfigdir}/libuser.pc
+
+%files apidocs
+%defattr(644,root,root,755)
 %{_gtkdocdir}/libuser
 
 %files -n python-libuser
