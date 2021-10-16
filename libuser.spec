@@ -7,15 +7,12 @@
 Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
-Version:	0.62
-Release:	5
+Version:	0.63
+Release:	1
 License:	LGPL v2+
 Group:		Base
-#Source0Download: https://pagure.io/libuser/releases
-#Source0:	https://pagure.io/libuser/archive/libuser-%{version}/libuser-%{name}-%{version}.tar.gz
-Source0:	%{name}-%{version}.tar.xz
-# Source0-md5:	63e5e5c551e99dc5302b40b80bd6d4f2
-Patch0:		format-security.patch
+Source0:	https://pagure.io/libuser/archive/libuser-%{version}/libuser-%{name}-%{version}.tar.gz
+# Source0-md5:	3ab610afe9ab2431cdeed46b0c629bd1
 URL:		https://pagure.io/libuser
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	gettext-tools >= 0.17
@@ -96,12 +93,20 @@ pythonowe API do manipulowania i administrowania kontami użytkowników
 i grup.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{name}-%{version}
 
 %build
+mkdir -p m4
+%{__gtkdocize} --docdir docs/reference
+%{__libtoolize}
+%{__autopoint}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	NSCD=/usr/sbin/nscd \
+	--enable-gtk-doc \
 	--with-html-dir=%{_gtkdocdir} \
 	--with-ldap \
 	--with-selinux
