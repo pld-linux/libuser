@@ -14,15 +14,21 @@ Group:		Base
 Source0:	https://pagure.io/libuser/archive/libuser-%{version}/libuser-%{name}-%{version}.tar.gz
 # Source0-md5:	3ab610afe9ab2431cdeed46b0c629bd1
 URL:		https://pagure.io/libuser
+BuildRequires:	autoconf >= 2.63b
+BuildRequires:	automake
+BuildRequires:	bison
 BuildRequires:	cyrus-sasl-devel
-BuildRequires:	gettext-tools >= 0.17
+BuildRequires:	gettext-tools >= 0.18.2
 BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	gtk-doc
 BuildRequires:	libselinux-devel
+BuildRequires:	libtool >= 2:2
 BuildRequires:	openldap-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	python-devel
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	sgml-tools
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -95,11 +101,13 @@ i grup.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+%{__sed} -i -e '/AC_CONFIG_FILES/ s, po/Makefile\.in,,' configure.ac
+
 %build
 mkdir -p m4
 %{__gtkdocize} --docdir docs/reference
+%{__gettextize}
 %{__libtoolize}
-%{__autopoint}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
