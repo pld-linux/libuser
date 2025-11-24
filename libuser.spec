@@ -7,12 +7,12 @@
 Summary:	A user and group account administration library
 Summary(pl.UTF-8):	Biblioteka do administrowania kontami użytkowników i grup
 Name:		libuser
-Version:	0.63
-Release:	4
+Version:	0.64
+Release:	1
 License:	LGPL v2+
 Group:		Base
 Source0:	https://pagure.io/libuser/archive/libuser-%{version}/libuser-%{name}-%{version}.tar.gz
-# Source0-md5:	3ab610afe9ab2431cdeed46b0c629bd1
+# Source0-md5:	5fdc85ea73ddc91c50836d726272c37d
 URL:		https://pagure.io/libuser
 BuildRequires:	autoconf >= 2.63b
 BuildRequires:	automake
@@ -27,7 +27,7 @@ BuildRequires:	openldap-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
-BuildRequires:	python-devel
+BuildRequires:	python3-devel
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	sgml-tools
 BuildRequires:	tar >= 1:1.22
@@ -82,18 +82,18 @@ API documentation for libuser library.
 %description apidocs -l pl.UTF-8
 Dokumentacja API biblioteki libuser.
 
-%package -n python-libuser
+%package -n python3-libuser
 Summary:	Python bindings for the libuser library
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libuser
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 
-%description -n python-libuser
+%description -n python3-libuser
 This package contains the Python bindings for the libuser library,
 which provides a Python API for manipulating and administering user
 and group accounts.
 
-%description -n python-libuser -l pl.UTF-8
+%description -n python3-libuser -l pl.UTF-8
 Ten pakiet zawiera wiązania Pythona do biblioteki libuser. Udostępnia
 pythonowe API do manipulowania i administrowania kontami użytkowników
 i grup.
@@ -113,7 +113,9 @@ mkdir -p m4
 %{__autoheader}
 %{__automake}
 %configure \
+	CFLAGS="%{rpmcflags} -std=gnu17" \
 	NSCD=/usr/sbin/nscd \
+	PYTHON="%{__python3}" \
 	--enable-gtk-doc \
 	--with-html-dir=%{_gtkdocdir} \
 	--with-ldap \
@@ -130,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # loadable modules
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.la
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/*.la
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libuser.la
 
@@ -188,7 +190,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_gtkdocdir}/libuser
 
-%files -n python-libuser
+%files -n python3-libuser
 %defattr(644,root,root,755)
 %doc python/modules.txt
-%attr(755,root,root) %{py_sitedir}/libuser.so
+%attr(755,root,root) %{py3_sitedir}/libuser.so
